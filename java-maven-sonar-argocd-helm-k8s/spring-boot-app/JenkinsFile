@@ -1,15 +1,15 @@
 pipeline {
   agent {
     docker {
-      image 'sureshawsd/maven-docker-agent:latest'
+      image 'vregistry.virsec.local/apps/maven-docker-agent:latest'
       args '--user root -v /var/run/docker.sock:/var/run/docker.sock' // mount Docker socket to access the host's Docker daemon
     }
   }
   environment {
         // Define environment variables as needed
-        DOCKER_IMAGE_NAME = "artifacts.virsec.work/app-image/ultimate-cicd"
-        DOCKER_REGISTRY_URL = "https://artifacts.virsec.work/v2/"
-        ARTIFACTORY_URL = "https://artifacts.virsec.work/artifactory"
+        DOCKER_IMAGE_NAME = "vregistry.virsec.local/apps/ultimate-cicd"
+        DOCKER_REGISTRY_URL = "https://vregistry.virsec.local/v2/"
+        ARTIFACTORY_URL = "http://artifacts.virsec.local:8082/"
         GITHUB_REPO_URL = "https://github.com/sureshAWS-Git/Jenkins-Zero-To-Hero.git"
     }
 
@@ -42,7 +42,7 @@ pipeline {
 
     stage('Build and Push Docker Image') {
       environment {
-        DOCKER_IMAGE = "artifacts.virsec.work/app-image/ultimate-cicd:${BUILD_NUMBER}"
+        DOCKER_IMAGE = "vregistry.virsec.local/apps/ultimate-cicd:${BUILD_NUMBER}"
         // DOCKERFILE_LOCATION = "java-maven-sonar-argocd-helm-k8s/spring-boot-app/Dockerfile"
         REGISTRY_CREDENTIALS = credentials('docker-cred')
       }
@@ -50,7 +50,7 @@ pipeline {
         script {
             sh 'cd java-maven-sonar-argocd-helm-k8s/spring-boot-app && docker build -t ${DOCKER_IMAGE} .'
             def dockerImage = docker.image("${DOCKER_IMAGE}")
-            docker.withRegistry('https://artifacts.virsec.work/v2/', "docker-cred") {
+            docker.withRegistry('https://vregistry.virsec.local/v2/', "docker-cred") {
                 dockerImage.push()
             }
         }
