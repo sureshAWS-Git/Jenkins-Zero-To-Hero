@@ -16,6 +16,6 @@ spec:
     spec:
       containers:
       - name: spring-boot-app
-        image: vregistry.virsec.local/apps/ultimate-cicd:replaceImageTag
+        image: vregistry.virsec.local/apps/ultimate-cicd:28
         ports:
         - containerPort: 8080
