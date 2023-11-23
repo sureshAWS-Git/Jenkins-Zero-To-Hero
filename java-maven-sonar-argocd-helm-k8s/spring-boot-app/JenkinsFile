@@ -1,7 +1,6 @@
 pipeline {
   agent {
     docker {
-      REGISTRY_CREDENTIALS = credentials('docker-cred')
       image 'vregistry.virsec.local/apps/maven-docker-agent:latest'
       args '--user root -v /var/run/docker.sock:/var/run/docker.sock' // mount Docker socket to access the host's Docker daemon
     }
@@ -10,6 +9,7 @@ pipeline {
         // Define environment variables as needed
         DOCKER_IMAGE_NAME = "vregistry.virsec.local/apps/ultimate-cicd"
         DOCKER_REGISTRY_URL = "https://vregistry.virsec.local/v2/"
+        REGISTRY_CREDENTIALS = credentials('docker-cred')
         ARTIFACTORY_URL = "http://artifacts.virsec.local:8082/"
         GITHUB_REPO_URL = "https://github.com/sureshAWS-Git/Jenkins-Zero-To-Hero.git"
     }
