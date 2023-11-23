@@ -1,6 +1,7 @@
 pipeline {
   agent {
     docker {
+      REGISTRY_CREDENTIALS = credentials('docker-cred')
       image 'vregistry.virsec.local/apps/maven-docker-agent:latest'
       args '--user root -v /var/run/docker.sock:/var/run/docker.sock' // mount Docker socket to access the host's Docker daemon
     }
