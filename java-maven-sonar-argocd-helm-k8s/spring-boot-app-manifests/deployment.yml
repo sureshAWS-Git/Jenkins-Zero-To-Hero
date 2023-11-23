@@ -16,6 +16,6 @@ spec:
     spec:
       containers:
       - name: spring-boot-app
-        image: sureshawsd/ultimate-cicd:21
+        image: artifacts.virsec.work/app-image/ultimate-cicd:replaceImageTag
         ports:
         - containerPort: 8080
