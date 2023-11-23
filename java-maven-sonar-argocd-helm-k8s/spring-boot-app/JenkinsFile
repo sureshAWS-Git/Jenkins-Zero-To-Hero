@@ -2,8 +2,6 @@ pipeline {
   agent {
     docker {
       image 'vregistry.virsec.local/apps/maven-docker-agent:latest'
-      registryUrl 'https://vregistry.virsec.local/v2/'
-      registryCredentialsId 'docker-cred'
       args '--user root -v /var/run/docker.sock:/var/run/docker.sock' // mount Docker socket to access the host's Docker daemon
     }
   }
